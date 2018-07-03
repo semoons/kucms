@@ -1,5 +1,5 @@
 {
-    "name": "semoon/ku-cms",
+    "name": "kucms/ku-cms",
     "description": "kucms 项目框架",
     "type": "project",
     "homepage": "http://www.waakuu.com/",
@@ -14,14 +14,8 @@
     "config": {
         "preferred-install": "dist"
     },
-    "repositories": [
-        {
-            "type": "composer",
-            "url": "https://packagist.org"
-        }
-    ],
     "require": {
-        "kucms/think-cms-framework": "dev-master",
+        "kucms/think-cms-framework": "1.0",
         "zhangvoice/ueditor":"dev-master",
         "zoujingli/wechat-php-sdk":"v1.3.8",
         "5ini99/think-addons":"1.2.0",

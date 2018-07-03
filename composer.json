@@ -1,0 +1,37 @@
+{
+    "name": "semoon/ku-cms",
+    "description": "kucms 项目框架",
+    "type": "project",
+    "homepage": "http://www.waakuu.com/",
+    "license": "Apache-2.0",
+    "authors": [
+        {
+            "name": "semoon",
+            "email": "12139267@qq.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "config": {
+        "preferred-install": "dist"
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://packagist.org"
+        }
+    ],
+    "require": {
+        "kucms/think-cms-framework": "dev-master",
+        "zhangvoice/ueditor":"dev-master",
+        "zoujingli/wechat-php-sdk":"v1.3.8",
+        "5ini99/think-addons":"1.2.0",
+        "flc/alidayu":"v2.0.5"
+    },
+    "extra": {
+        "think-path": "thinkphp",
+        "cms-path": "vendor/thinkcms", 
+        "application-path": "application",
+        "extend-path": "extend",
+        "public-path": "public"
+    }
+}

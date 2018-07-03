@@ -1,0 +1,39 @@
+{extend name="common/base" }
+
+{block name="content"}
+
+<div class="am-g">
+	<div class="am-u-sm-12">
+		<table class="am-table am-table-striped am-table-radius am-table-bordered">
+			<thead>
+				<tr>
+					<th>备份时间</th>
+					<th>备份用户</th>
+					<th>文件路径</th>
+					<th>文件大小</th>
+					<th>操作</th>
+				</tr>
+			</thead>
+			<tbody>
+			{volist name="list" id="vo"}
+				<tr>
+					<td>{$vo.dump_time|date='Y-m-d H:i:s',###}</td>
+					<td>{$vo.user.name}</td>
+					<td>{$vo.dump_file}</td>
+					<td>{$vo.dump_size}</td>
+					<td>
+						<div class="am-btn-toolbar">
+							<div class="am-btn-group am-btn-group-xs">
+								<a class="am-btn am-btn-default am-btn-xs am-text-danger ajax-get ajax-confirm" href="{:url('delBakup', ['bakup_id' => $vo['id']])}">
+									<span class="am-icon-trash-o"></span> 删除
+								</a>
+							</div>
+						</div>
+					</td>
+				</tr>
+			{/volist}
+			</tbody>
+		</table>
+	</div>
+</div>
+{/block}

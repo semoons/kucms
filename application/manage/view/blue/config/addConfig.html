@@ -1,0 +1,27 @@
+{extend name="common/base" }
+
+{block name="content"}
+<div class="am-g">
+	<div class="am-u-sm-12">
+		<form class="am-form ajax-form" method="post" action="{:url('addConfig')}">
+			
+			{:block('text', ['title' => '配置名称', 'name' => 'config_name', 'value' => ''])}
+			
+			{:block('text', ['title' => '配置标题', 'name' => 'config_title', 'value' => ''])}
+			
+			{:block('select', ['title' => '配置类型', 'name' => 'config_type', 'value' => '', 'list' => $config_type])}
+			
+			{:block('text', ['title' => '配置分组', 'name' => 'config_group', 'value' => ''])}
+			
+			{:block('text', ['title' => '配置排序', 'name' => 'config_sort', 'value' => '0'])}
+			
+			{:block('textarea', ['title' => '额外配置', 'name' => 'config_extra', 'value' => ''])}
+			
+			{:block('textarea', ['title' => '配置说明', 'name' => 'config_remark', 'value' => ''])}
+			
+			{:block('submit', ['title' => '用户操作'])}
+			
+		</form>
+	</div>
+</div>
+{/block}

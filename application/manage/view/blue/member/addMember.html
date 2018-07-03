@@ -1,0 +1,25 @@
+{extend name="common/base" }
+
+{block name="content"}
+<div class="am-g">
+	<div class="am-u-sm-12">
+		<form class="am-form ajax-form" method="post" action="{:url('addMember')}">
+			
+			{:block('text', ['title' => '登录名称', 'name' => 'user_name', 'value' => ''])}
+			
+			{:block('text', ['title' => '用户昵称', 'name' => 'user_nick', 'value' => ''])}
+			
+			{:block('text', ['title' => '登录密码', 'name' => 'user_passwd', 'value' => ''])}
+			
+			{:block('text', ['title' => '重复密码', 'name' => 're_passwd', 'value' => ''])}
+			
+			{:block('select', ['title' => '所属群组', 'name' => 'group_id', 'value' => '', 'list' => $member_group])}
+			
+			{:block('select', ['title' => '用户状态', 'name' => 'user_status', 'value' => '', 'list' => $user_status])}
+			
+			{:block('submit', ['title' => '用户操作'])}
+
+		</form>
+	</div>
+</div>
+{/block}

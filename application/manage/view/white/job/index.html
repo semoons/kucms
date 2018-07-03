@@ -1,0 +1,142 @@
+{extend name="common/base" }
+
+{block name="style"}
+<style type="text/css">
+.am-pre-scrollable{
+	margin: 0px;
+	max-height: 370px;
+}
+.queue-popup{
+	width: 600px;
+	height: 450px;
+	margin-left: -300px;
+    margin-top: -225px;
+	z-index: 2000;
+	background: #f8f8f8;
+	border: 1px solid #E6E5E5;
+}
+</style>
+{/block}
+
+{block name="content"}
+<form action="{:url('index')}" class="search-form">
+	<div class="am-g">
+	
+		<div class="am-u-sm-12 am-u-md-3">
+			<div class="am-btn-toolbar">
+				<div class="am-btn-group am-btn-group-xs">
+					<a class="am-btn am-btn-default nd-refresh">
+						<span class="am-icon-refresh"></span> 刷新
+					</a>
+				</div>
+			</div>
+		</div>
+		
+		{:search('select', ['name' => 'queue', 'value' => $queue, 'list' => $queue_list, 'md_num' => 3])}
+	
+		{:search('keyword', ['name' => 'keyword', 'holder' => '关键词', 'value' => $keyword, 'md_num' => 3])}
+	</div>
+</form>
+<br />
+
+<div class="am-g">
+	<div class="am-u-sm-12">
+	
+		<table class="am-table am-table-striped am-table-radius am-table-bordered">
+			<thead>
+				<tr>
+					<th>队列</th>
+					<th>重试次数</th>
+					<th>状态</th>
+					<th>失败时间</th>
+					<th>执行时间</th>
+					<th>创建时间</th>
+					<th width="210px">操作</th>
+				</tr>
+			</thead>
+			<tbody>
+			{volist name="list" id="vo"}
+				<tr>
+					<td>{$vo.queue}</td>
+					<td>{$vo.attempts}</td>
+					<td>
+						<select data-am-selected="{btnSize: 'sm'}" class="nd-input" url="{:url('modifyStatus', ['id' => $vo['id'], 'field' => 'reserved', 'value' => 'xxxxxx'])}">
+							<option {eq name="vo.reserved" value="0"}selected{/eq} value="0">正常</option>
+							<option {eq name="vo.reserved" value="1"}selected{/eq} value="1">失败</option>
+						</select>
+					</td>
+					<td>
+						{if condition="$vo['reserved_at']"}
+							{$vo.reserved_at|date='Y-m-d H:i:s',###}
+						{/if}
+					</td>
+					<td>{$vo.available_at|date='Y-m-d H:i:s',###}</td>
+					<td>{$vo.created_at|date='Y-m-d H:i:s',###}</td>
+					<td class="am-text-middle">
+						<div class="am-btn-toolbar">
+							<div class="am-btn-group am-btn-group-xs">
+								<a class="am-btn am-btn-default am-btn-xs am-text-primary" data-am-modal="{target: '#queue-popup-{$vo.id}', dimmer: false}">
+									<span class="am-icon-database"></span> 数据
+								</a>
+								<a class="am-btn am-btn-default am-btn-xs am-text-secondary queue-release" data-id="{$vo.id}">
+									<span class="am-icon-send"></span> 发布
+								</a>
+								<a class="am-btn am-btn-default am-btn-xs am-text-danger ajax-get ajax-confirm" href="{:url('delJob', ['job_id' => $vo['id']])}">
+									<span class="am-icon-trash-o"></span> 删除
+								</a>
+							</div>
+						</div>
+					</td>
+				</tr>
+			{/volist}
+			</tbody>
+		</table>
+		
+		{volist name="list" id="vo"}
+		<div class="am-popup queue-popup" id="queue-popup-{$vo.id}">
+			<div class="am-popup-inner">
+				<div class="am-popup-hd">
+					<h4 class="am-popup-title">任务数据</h4>
+					<span data-am-modal-close class="am-close">&times;</span>
+				</div>
+				<div class="am-popup-bd">
+					<pre class="am-pre-scrollable">{$vo.payload}</pre>
+				</div>
+			</div>
+		</div>
+		{/volist}
+		
+		{if condition="!empty($page)"}
+			<div class="am-fl">共 {$total_count} 条记录</div>
+			<div class="am-fr">
+				{$page}
+			</div>
+		{/if}
+		
+	</div>
+</div>
+{/block}
+
+{block name="script"}
+<script type="text/javascript">
+var release_url = "{:url('modifyStatus')}";
+$(function(){
+	$('.queue-release').on('click', function(){
+		var id = $(this).attr('data-id');
+		promptAlert('请输入延迟秒数', 10, function(time){
+			$.ajax({
+				type: 'post',
+				url: release_url,
+				data: {
+					id: id,
+					value: 2,
+					time: time
+				},
+				success: ajaxSuccess,
+				error: ajaxError
+			});
+		});
+	});
+});
+</script>
+{/block}

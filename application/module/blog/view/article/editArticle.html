@@ -1,0 +1,35 @@
+{extend name="common/base" }
+
+{block name="content"}
+<div class="am-g">
+	<div class="am-u-sm-12">
+		<form class="am-form ajax-form" method="post" action="{:moduleUrl('editArticle', ['article_id' => $article_id])}">
+		
+			{:block('text', ['title' => '文章标题', 'name' => 'article_title', 'value' => $article['article_title']])}
+			
+			{:block('select', ['title' => '文章分类', 'name' => 'article_cate', 'value' => $article['article_cate'], 'list' => $cate_list])}
+			
+			{:block('text', ['title' => '文章作者', 'name' => 'article_author', 'value' => $article['article_author']])}
+			
+			{:block('tag', ['title' => '文章标签', 'name' => 'article_tags', 'value' => $article['article_tags']])}
+			
+			{:block('textarea', ['title' => '文章简介', 'name' => 'article_info', 'value' => $article['article_info']])}
+			
+			{:block('image', ['title' => '文章封面', 'name' => 'article_cover', 'value' => $article['article_cover'], 'width' => 600])}
+			
+			{:block('select', ['title' => '文章状态', 'name' => 'article_status', 'value' => $article['article_status'], 'list' => $article_status])}
+			
+			{:block('editor', ['title' => '文章内容', 'name' => 'article_content', 'value' => $article['article_content']])}
+			
+			{:block('textarea', ['title' => '原文链接', 'name' => 'article_origin', 'value' => $article['article_origin']])}
+			
+			{:block('text', ['title' => '文章排序', 'name' => 'article_sort', 'value' => $article['article_sort']])}
+			
+			{:block('date', ['title' => '发布时间', 'name' => 'create_time', 'value' => date('Y-m-d', $article['create_time'])])}
+			
+			{:block('submit', ['title' => '用户操作'])}
+			
+		</form>
+	</div>
+</div>
+{/block}

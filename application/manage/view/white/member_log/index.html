@@ -1,0 +1,78 @@
+{extend name="common/base" }
+
+{block name="style"}
+<style type="text/css">
+.nd-group-select{
+	color: #0062F9 !important;
+}
+</style>
+{/block}
+
+{block name="content"}
+<form action="{:url('index')}" class="search-form">
+	<div class="am-g">
+	
+		<div class="am-u-sm-12 am-u-md-3">
+			<div class="am-btn-toolbar">
+				<div class="am-btn-group am-btn-group-xs">
+					<a class="am-btn am-btn-default nd-refresh">
+						<span class="am-icon-refresh"></span> 刷新
+					</a>
+				</div>
+			</div>
+		</div>
+		
+		{:search('select', ['name' => 'uid', 'value' => $uid, 'list' => $user_select])}
+		
+		{:search('date', ['name' => 'start_time', 'holder' => '开始日期', 'value' => $start_time])}
+		
+		{:search('date', ['name' => 'end_time', 'holder' => '结束日期', 'value' => $end_time])}
+	
+		{:search('keyword', ['name' => 'keyword', 'holder' => '关键词', 'value' => $keyword, 'md_num' => 3])}
+	</div>
+</form>
+
+<div class="am-g">
+	<div class="am-u-sm-12">
+	
+		<table class="am-table am-table-striped am-table-radius am-table-bordered">
+			<thead>
+				<tr>
+					<th>登录用户</th>
+					<th>客户端IP</th>
+					<th>浏览器标识</th>
+					<th>登录时间</th>
+					<th>操作</th>
+				</tr>
+			</thead>
+			<tbody>
+			{volist name="list" id="vo"}
+				<tr>
+					<td>{$vo.user.name}</td>
+					<td>{$vo.login_ip}</td>
+					<td>{$vo.login_agent}</td>
+					<td>{$vo.create_time|date='Y-m-d H:i:s',###}</td>
+					<td>
+						<div class="am-btn-toolbar">
+							<div class="am-btn-group am-btn-group-xs">
+								<a class="am-btn am-btn-default am-btn-xs am-text-danger ajax-get ajax-confirm" href="{:url('delFile', ['file_id' => $vo['id']])}">
+									<span class="am-icon-trash-o"></span> 删除
+								</a>
+							</div>
+						</div>
+					</td>
+				</tr>
+			{/volist}
+			</tbody>
+		</table>
+		
+		{if condition="!empty($page)"}
+			<div class="am-fl">共 {$total_count} 条记录</div>
+			<div class="am-fr">
+				{$page}
+			</div>
+		{/if}
+		
+	</div>
+</div>
+{/block}

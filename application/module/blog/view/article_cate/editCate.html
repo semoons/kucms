@@ -1,0 +1,23 @@
+{extend name="common/base" }
+
+{block name="content"}
+<div class="am-g">
+	<div class="am-u-sm-12">
+		<form class="am-form ajax-form" method="post" action="{:moduleUrl('editCate', ['cate_id' => $cate_id])}">
+		
+			{:block('text', ['title' => '分类名称', 'name' => 'cate_name', 'value' => $cate['cate_name']])}
+			
+			{:block('text', ['title' => '分类标识', 'name' => 'cate_flag', 'value' => $cate['cate_flag']])}
+			
+			{:block('textarea', ['title' => '分类说明', 'name' => 'cate_info', 'value' => $cate['cate_info']])}
+			
+			{:block('text', ['title' => '分类排序', 'name' => 'cate_sort', 'value' => $cate['cate_sort']])}
+			
+			{:block('select', ['title' => '分类状态', 'name' => 'cate_status', 'value' => $cate['cate_status'], 'list' => $cate_status])}
+			
+			{:block('submit', ['title' => '用户操作'])}
+			
+		</form>
+	</div>
+</div>
+{/block}

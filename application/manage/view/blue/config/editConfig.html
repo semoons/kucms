@@ -1,0 +1,27 @@
+{extend name="common/base" }
+
+{block name="content"}
+<div class="am-g">
+	<div class="am-u-sm-12">
+		<form class="am-form ajax-form" method="post" action="{:url('editConfig', ['config_id' => $config_id])}">
+		
+			{:block('text', ['title' => '配置名称', 'name' => 'config_name', 'value' => $config['config_name']])}
+			
+			{:block('text', ['title' => '配置标题', 'name' => 'config_title', 'value' => $config['config_title']])}
+			
+			{:block('select', ['title' => '配置类型', 'name' => 'config_type', 'value' => $config['config_type'], 'list' => $config_type])}
+			
+			{:block('text', ['title' => '配置分组', 'name' => 'config_group', 'value' => $config['config_group']])}
+			
+			{:block('text', ['title' => '配置排序', 'name' => 'config_sort', 'value' => $config['config_sort']])}
+			
+			{:block('textarea', ['title' => '额外配置', 'name' => 'config_extra', 'value' => $config['config_extra']])}
+			
+			{:block('textarea', ['title' => '配置说明', 'name' => 'config_remark', 'value' => $config['config_remark']])}
+			
+			{:block('submit', ['title' => '用户操作'])}
+			
+		</form>
+	</div>
+</div>
+{/block}

@@ -1,0 +1,149 @@
+.admin-warpper .admin-header {
+	width: 100%;
+	height: 4rem;
+	background-color: #0e90d2;
+}
+
+.admin-warpper .admin-header .admin-logo {
+	width: 15rem;
+	line-height: 3.5rem;
+	font-size: 2.2rem;
+	text-align: center;
+	float: left;
+}
+
+.admin-warpper .admin-header .admin-logo a {
+	font-family: '幼圆', '黑体';
+	color: #FFFFFF;
+}
+
+.admin-warpper .admin-header .admin-nav {
+	float: left;
+}
+
+.admin-warpper .admin-header .admin-nav-right {
+	float: right;
+	margin-right: 1rem;
+}
+
+.admin-warpper .admin-header .admin-nav .admin-nav-list li {
+	min-width: 7rem;
+	text-align: center;
+	background: transparent;
+	float: left;
+	border: none;
+}
+
+.admin-warpper .admin-header .admin-nav .admin-nav-list li:hover,
+.admin-warpper .admin-header .admin-nav .admin-nav-list li.active {
+	background: #0487CA;
+}
+
+.admin-warpper .admin-header .admin-nav .admin-nav-list li.active a {
+	color: #EDFF00;
+}
+
+.admin-warpper .admin-header .admin-nav .admin-nav-list a {
+	color: #FFFFFF;
+	line-height: 4rem;
+	padding: 0;
+}
+
+.admin-warpper .admin-header .admin-nav .admin-nav-list .am-dropdown-content {
+	min-width: 10rem;
+}
+
+.admin-warpper .admin-header .admin-nav .admin-nav-list .am-dropdown-content li {
+	width: 100%;
+	text-align: center;
+}
+
+.admin-warpper .admin-header .admin-nav .admin-nav-list .am-dropdown-content a {
+	color: #000000;
+	font-size: 1.5rem;
+	line-height: 3rem;
+	padding: 0;
+}
+
+.admin-warpper .admin-content .admin-sidebar {
+	position: fixed;
+	width: 15rem;
+	top: 4rem;
+	font-size: 1.3rem;
+	font-weight: bold;
+	bottom: 0;
+	left: 0;
+	overflow-x: hidden;
+	overflow-y: auto;
+	background: #0B80BB;
+	border-right: 1px solid #CCCCCC;
+}
+
+.admin-warpper .admin-content .admin-sidebar .admin-sider-list li a{
+	padding: 0.9rem;
+}
+
+.admin-warpper .admin-content .admin-sidebar .admin-sider-list span{
+	margin-left: 8px;
+	margin-right: 5px;
+}
+
+.admin-warpper .admin-content .admin-sidebar li {
+	border: 1px solid #0E90D2;
+	background: transparent;
+}
+
+.admin-warpper .admin-content .admin-sidebar li a {
+	color: #FFFFFF;
+	background: transparent;
+}
+
+.admin-warpper .admin-content .admin-sidebar .active .admin-sidebar-item,
+.admin-warpper .admin-content .admin-sidebar .admin-sidebar-sub .active a {
+	color: #EDFF00;
+}
+
+.admin-warpper .admin-content .admin-sidebar .admin-sidebar-sub {
+	font-size: 1.2rem;
+	font-weight: normal;
+	margin: 0;
+}
+
+.admin-warpper .admin-content .admin-sidebar .admin-sidebar-sub .am-badge {
+	font-weight: normal;
+	padding: 0.25em;
+}
+
+.admin-warpper .admin-content .admin-sidebar .admin-sidebar-sub li {
+	padding-left: 1.5rem;
+}
+
+.admin-warpper .admin-content .admin-sidebar li a:hover,
+.admin-warpper .admin-content .admin-sidebar .admin-sidebar-sub li:hover {
+	background: #246688;
+}
+
+.admin-warpper .admin-content .admin-area {
+	position: fixed;
+	padding-bottom: 2rem;
+	top: 4rem;
+	bottom: 0;
+	left: 15rem;
+	right: 0;
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+
+.admin-warpper .admin-content .admin-area.admin-fullscreen {
+	overflow-x: visible;
+	overflow-y: visible;
+}
+
+.admin-warpper .admin-content .admin-area .admin-pagination {
+	font-size: 1.4rem;
+	padding: 0 2rem;
+}
+
+.admin-warpper .admin-content .admin-area .admin-pagination .admin-pagination-info {
+	margin: 1.5rem 0;
+}

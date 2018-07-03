@@ -1,0 +1,28 @@
+<div class="admin-sidebar">
+	<ul class="am-list am-list-border admin-sider-list">
+	{foreach name="sider_menu" id="vo" key="key"}
+		{if condition="isset($vo['sub_menu'])"}
+			<li class="{if condition='$vo.menu_active'}active{/if}">
+				<a class="admin-sidebar-item" data-am-collapse="{target: '#{$key}'}">
+					<span class="am-icon-angle-double-right "></span> {$vo.menu_name}
+				</a>
+			</li>
+			<ul class="am-list am-list-border am-in am-collapse admin-sidebar-sub" id="{$key}">
+			{foreach name="$vo.sub_menu" id="item"}
+				<li class="{if condition='$item.menu_active'}active{/if}">
+					<a href="{$item.menu_url}" class="am-cf">
+						<span class="am-icon-angle-right"></span> {$item.menu_name}
+					</a>
+				</li>
+			{/foreach}
+			</ul>
+		{else /}
+			{if condition="$vo.menu_active"}<li class="active">{else /}<li>{/if}
+				<a class="admin-sidebar-item" href="{$vo.menu_url}">
+					<span class="am-icon-angle-right"></span> {$vo.menu_name}
+				</a>
+			</li>
+		{/if}
+	{/foreach}
+	</ul>
+</div>

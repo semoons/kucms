@@ -1,0 +1,21 @@
+{extend name="common/base" }
+
+{block name="content"}
+<div class="am-g">
+	<div class="am-u-sm-12">
+		<form class="am-form ajax-form" method="post" action="{:url('addGroup')}">
+		
+			{:block('text', ['title' => '群组名称', 'name' => 'group_name', 'value' => ''])}
+		
+			{:block('text', ['title' => '后台主页', 'name' => 'home_page', 'value' => ''])}
+			
+			{:block('textarea', ['title' => '群组说明', 'name' => 'group_info', 'value' => ''])}
+			
+			{:block('select', ['title' => '群组状态', 'name' => 'group_status', 'value' => '', 'list' => $group_status])}
+			
+			{:block('submit', ['title' => '用户操作'])}
+			
+		</form>
+	</div>
+</div>
+{/block}

@@ -1,0 +1,89 @@
+{extend name="common/base" }
+
+{block name="content"}
+<div class="am-g">
+	<div class="am-u-sm-12 am-u-md-6">
+		<div class="am-btn-toolbar">
+			<div class="am-btn-group am-btn-group-xs">
+				<a class="am-btn am-btn-default" href="{:url('addMenu', ['menu_pid' => $menu_pid])}">
+					<span class="am-icon-plus"></span> 新增
+				</a>
+				<a class="am-btn am-btn-default nd-refresh">
+					<span class="am-icon-refresh"></span> 刷新
+				</a>
+				{if condition="$menu_pid gt 0"}
+				<a class="am-btn am-btn-default nd-backward">
+					<span class="am-icon-reply"></span> 返回
+				</a>
+				{/if}
+			</div>
+		</div>
+	</div>
+	<div class="am-u-sm-12 am-u-md-6">
+		<div class="am-btn-toolbar">
+			<div class="am-btn-group am-btn-group-xs" style="float: right">
+				<a class="am-btn am-btn-default {eq name='group' value=''}nd-group-select{/eq}" href="{:url('index', ['menu_pid' => $menu_pid])}">
+					全部
+				</a>
+			{volist name="group_list" id="vo"}
+				{if condition="!empty($vo.menu_group)"}
+				<a class="am-btn am-btn-default {eq name='group' value='$vo.menu_group'}nd-group-select{/eq}" href="{:url('index', ['menu_pid' => $menu_pid, 'group' => $vo['menu_group']])}">
+					{$vo.menu_group|default='默认'}
+				</a>
+				{/if}
+			{/volist}
+			</div>
+		</div>
+	</div>
+</div>
+<br/>
+
+<div class="am-g">
+	<div class="am-u-sm-12">
+		<table class="am-table am-table-striped am-table-radius am-table-bordered">
+			<thead>
+				<tr>
+					<th>名称</th>
+					<th>链接</th>
+					<th>分组</th>
+					<th>排序</th>
+					<th>状态</th>
+					<th>操作</th>
+				</tr>
+			</thead>
+			<tbody>
+			{volist name="list" id="vo"}
+				<tr>
+					<td><a href="{:url('index', ['menu_pid' => $vo['id']])}">{$vo.menu_name}</a></td>
+					<td title="{$vo.menu_flag}">{$vo.menu_url}</td>
+					<td class="am-form">
+						<input type="text" class="am-input-sm nd-input" value="{$vo.menu_group}" url="{:url('modifyMenu', ['id' => $vo['id'], 'field' => 'menu_group', 'value' => 'xxxxxx'])}" />
+					</td>
+					<td class="am-form">
+						<input type="text" class="am-input-sm nd-input" value="{$vo.menu_sort}" url="{:url('modifyMenu', ['id' => $vo['id'], 'field' =>  'menu_sort', 'value' => 'xxxxxx'])}" />
+					</td>
+					<td>
+						<select data-am-selected="{btnSize: 'sm'}" class="nd-input" url="{:url('modifyMenu', ['id' => $vo['id'], 'field' =>  'menu_status', 'value' => 'xxxxxx'])}">
+							<option {eq name="vo.menu_status" value="1"}selected{/eq} value="1">显示</option>
+							<option {eq name="vo.menu_status" value="0"}selected{/eq} value="0">隐藏</option>
+						</select>
+					</td>
+					<td>
+						<div class="am-btn-toolbar">
+							<div class="am-btn-group am-btn-group-xs">
+								<a class="am-btn am-btn-default am-btn-xs am-text-secondary" href="{:url('editMenu', ['menu_id' => $vo['id']])}">
+									<span class="am-icon-pencil-square-o"></span> 编辑
+								</a>
+								<a class="am-btn am-btn-default am-btn-xs am-text-danger ajax-get ajax-confirm" href="{:url('delMenu', ['menu_id' => $vo['id']])}">
+									<span class="am-icon-trash-o"></span> 删除
+								</a>
+							</div>
+						</div>
+					</td>
+				</tr>
+			{/volist}
+			</tbody>
+		</table>
+	</div>
+</div>
+{/block}

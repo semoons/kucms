@@ -1,0 +1,129 @@
+{extend name="common/base" }
+
+{block name="css"}{/block}
+
+{block name="style"}
+<style>
+	body{
+	padding: 20px;
+	background-image: -webkit-gradient(linear, left top, right bottom, from(rgb(29,74,137)), to(rgb(120,164,199)));
+	background-image: -webkit-linear-gradient(left top, rgb(29,74,137), rgb(120,164,199));
+	background-image: -moz-linear-gradient(left top, rgb(29,74,137), rgb(120,164,199));
+	background-image: -o-linear-gradient(left top, rgb(29,74,137), rgb(120,164,199));
+	background-image: -ms-linear-gradient(left top, rgb(29,74,137), rgb(120,164,199));
+	background-image: linear-gradient(left top, rgb(29,74,137), rgb(120,164,199));
+}
+.login-content{
+	max-width: 35rem;
+	margin-top: -2rem;
+	margin-left: auto;
+	margin-right: auto;
+	padding-top: 30rem;
+	padding-top: 50vh;
+}
+.login-content .login-area{
+	width: 100%;
+	padding: 2rem;
+	background: #fff;
+	border-radius: 2rem;
+	transform: translateY(-50%);
+}
+.login-content .login-area .login-title{
+	text-align: center;
+	font-size: 2.2rem;
+	color: #0e90d2;
+	padding-bottom: 1rem;
+	margin-bottom: 2rem;
+	border-bottom: 1px dashed #009CDA;
+}
+.login-content .login-area .login-code{
+	max-height: 3rem;
+	max-width: 100%;
+}
+.login-content .login-area .login-code-change{
+	line-height: 3rem;
+	font-size: 1.7rem;
+	text-align: center;
+	cursor: pointer;
+}
+.login-content .login-area .login-btn{
+	margin-top: 2rem;
+	margin-bottom: 1.2rem;
+}
+
+@media screen and (max-width: 500px) {
+	.login-content .login-area .login-code-change{
+		line-height: 2rem;
+		font-size: 1.2rem;
+	}
+}
+</style>
+{/block}
+
+{block name="body"}
+<div class="login-content">
+	<form class="login-form" action="{$login_url}">
+		<div class="login-area">
+			<h2 class="login-title">{$site_title}</h2>
+
+			<div class="am-form-group am-form-icon">
+				<i class="am-icon-user am-icon-fw"></i>
+				<input type="text" class="am-form-field am-round" name="user_name" value="" placeholder="用户名">
+			</div>
+
+			<div class="am-form-group am-form-icon">
+				<i class="am-icon-key am-icon-fw"></i>
+				<input type="password" class="am-form-field am-round" name="user_passwd" value="" id="user_passwd" placeholder="密码">
+			</div>
+
+			
+			<div class="am-form-group am-form-icon">
+				<i class="am-icon-eye am-icon-fw"></i>
+				<input type="text" class="am-form-field am-round" name="verify_code" id="verify_code" placeholder="验证码">
+			</div>
+
+			<div class="am-g">
+				<div class="am-u-sm-6" style="text-align: center;">
+					<a class="login-code-change">
+						<img class="login-code" data-src="{$code_url}" src="{$code_url}" />
+					</a>
+				</div>
+				<div class="am-u-sm-6">
+					<a href="javascript:void(0)" class="login-code-change">看不清？换一张</a>
+				</div>
+			</div>
+
+			<div class="login-btn">
+				<a class="am-btn am-btn-primary am-btn-block am-round ajax-post" target-form="login-form">立即登录</a>
+			</div>
+		</div>
+	</form>
+</div>
+{/block}
+
+{block name="js"}{/block}
+
+{block name="script"}
+<script type="text/javascript">
+	$(function() {
+	$('.login-code-change').on('click', function() {
+		var src = $('.login-code').attr('data-src');
+		$('.login-code').attr('src', src + '?_=' + Math.random());
+		$('#verify_code').val('');
+		$('#verify_code').focus();
+	});
+	
+	$('#user_passwd').keydown(function(e) {
+		if (e.keyCode == 13) {
+			$('.ajax-post').click();
+		}
+	});
+	
+	$('#verify_code').keydown(function(e) {
+		if (e.keyCode == 13) {
+			$('.ajax-post').click();
+		}
+	});
+});
+</script>
+{/block}

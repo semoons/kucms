@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
+	<meta name="renderer" content="webkit">
+	<title>{$site_title}</title>
+	<link rel="stylesheet" href="{$lib_path}/amazeui/2.7.1/css/amazeui.min.css?_={$site_version}" />
+    <link rel="stylesheet" href="{$lib_path}/amazeui/2.7.1/css/amazeui.datatables.css?_={$site_version}">
+	<link rel="stylesheet" href="{$lib_path}/alertifyjs/1.8.0/css/alertify.min.css?_={$site_version}" />
+	<link rel="stylesheet" href="{$lib_path}/alertifyjs/1.8.0/css/themes/default.min.css?_={$site_version}" />
+	{block name="css"}
+	<link rel="stylesheet" href="{$lib_path}/jquery.tagEditor/1.0.20/jquery.tag-editor.css?_={$site_version}" />
+	<link rel="stylesheet" href="{$lib_path}/wangEditor/2.1.20/dist/css/wangEditor.min.css?_={$site_version}" />
+	{/block}
+	<link rel="stylesheet" href="{$static_path}/manage/common.css?_={$site_version}">
+    <link rel="stylesheet" href="{$static_path}/manage/white/app.css?_={$site_version}">
+
+	{block name="style"}{/block}
+</head>
+<body class="theme-white">
+{block name="body"}
+<div class="am-g tpl-g">
+	{block name="header"}
+		{include file="manage/view@common/header" /}
+	{/block}
+	{block name="siderbar"}
+		{include file="manage/view@common/siderbar" /}
+	{/block}
+	<div class="tpl-content-wrapper">
+		<div class="row-content am-cf">
+			<div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+				{block name="content"}{/block}
+			</div>
+		</div>
+	</div>
+</div>
+{/block}
+<script type="text/javascript" src="{$lib_path}/jquery/2.0.0/jquery.min.js?_={$site_version}"></script>
+<script type="text/javascript" src="{$lib_path}/amazeui/2.7.1/js/amazeui.min.js?_={$site_version}"></script>
+<script type="text/javascript" src="{$lib_path}/amazeui/2.7.1/js/amazeui.datatables.min.js?_={$site_version}"></script>
+<script type="text/javascript" src="{$lib_path}/alertifyjs/1.8.0/alertify.min.js?_={$site_version}"></script>
+{block name="js"}
+<script type="text/javascript" src="{$lib_path}/colorPicker/1.0/colors.js?_={$site_version}"></script>
+<script type="text/javascript" src="{$lib_path}/colorPicker/1.0/colorPicker.data.js?_={$site_version}"></script>
+<script type="text/javascript" src="{$lib_path}/colorPicker/1.0/colorPicker.js?_={$site_version}"></script>
+<script type="text/javascript" src="{$lib_path}/colorPicker/1.0/jqColor.js?_={$site_version}"></script>
+<script type="text/javascript" src="{$lib_path}/jquery.tagEditor/1.0.20/jquery.caret.min.js?_={$site_version}"></script>
+<script type="text/javascript" src="{$lib_path}/jquery.tagEditor/1.0.20/jquery.tag-editor.min.js?_={$site_version}"></script>
+<script type="text/javascript" src="{$lib_path}/require/2.3.1/require.min.js?_={$site_version}"></script>
+<script type="text/javascript" >
+var baseApi = {
+	'upload' : '{:url("manage/upload/upload")}',
+	'upload_wang' : '{:url("manage/upload/wang")}',
+};
+require.config({
+	paths: {
+		'ace' : '{$lib_path}/ace/1.2.5/lib/ace',
+		'jquery' : '{$lib_path}/jquery/2.0.0/jquery.min',
+		'wangEditor' : '{$lib_path}/wangEditor/2.1.20/dist/js/wangEditor.min',
+		'beautify' : '{$lib_path}/js.beautify/1.6.4/beautify.min',
+		'beautify-css' : '{$lib_path}/js.beautify/1.6.4/beautify-css.min',
+		'beautify-html' : '{$lib_path}/js.beautify/1.6.4/beautify-html.min'
+	}
+});
+</script>
+{/block}
+<script type="text/javascript" src="{$static_path}/manage/common.js?_={$site_version}"></script>
+<script type="text/javascript" src="{$static_path}/manage/white/app.js?_={$site_version}"></script>
+{block name="script"}{/block}
+{block name="upload"}
+<div class="am-modal am-modal-loading am-modal-no-btn" tabindex="-1" id="my-modal-loading">
+  <div class="am-modal-dialog">
+    <div class="am-modal-hd">正在载入...</div>
+    <div class="am-modal-hd" id="upload_result"></div>
+    <div class="am-modal-bd">
+      <span class="am-icon-spinner am-icon-spin"></span>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+    $(function(){
+
+        $('#upload_file').on('change', function(){
+
+			$('#my-modal-loading').modal('open');
+
+            var upload_url = '{:moduleUrl("upload")}';
+            var upload_option = $('#upload_option').val(),
+                upload_file = $(this).get(0).files[0];
+            
+            if(typeof upload_file == 'undefined'){
+                return false;
+            }
+            
+            var form_data = new FormData();
+            form_data.append('upload_option', upload_option);
+            form_data.append('upload_file', upload_file);
+            var ajax_option = {
+                url     : upload_url,
+                type    : 'post',
+                data    : form_data,
+                dataType: 'json',
+                timeout : 0,
+                processData : false,
+                contentType : false,
+                xhr : function(){
+                    var xhr = $.ajaxSettings.xhr();
+                    var info = '';
+                    xhr.upload.onprogress = function(event){
+                        var percent = 0, position = event.loaded || event.position, total = event.total;
+                        if (event.lengthComputable) {
+                            percent = position / total * 100;
+                        }
+                        if(percent > 100){
+                            percent = 100;                                
+                        }
+                        if (percent == 100) {
+                        	info = '正在处理中...';
+                        } else {
+                        	info = '上传进度：'+percent+'%';
+                        }
+
+                    	$.AMUI.progress.set(percent);
+                    	$('#upload_result').html('<span class="am-text-warning">['+info+']</span>');
+                        
+                    };
+                    return xhr;
+                },
+                success : function(res){
+                    $.AMUI.progress.done();
+                    console.log(res);
+                    if(res.code == 1){
+                        $('#upload_result').html('<span class="am-text-danger">['+res.msg+']</span>');
+                    } else {
+                        $('#upload_result').html('<span class="am-text-danger">['+res.msg+']</span>');
+                    }
+                    location.reload();
+                },
+                error : function(xhr){
+                	console.log(xhr);
+                    $.AMUI.progress.done();
+                    $('#upload_result').html('<span class="am-text-danger">[网络链接错误]</span>');
+                    location.reload();
+                }
+            };
+            $.ajax(ajax_option);
+            $('#upload_result').html('<span class="am-text-danger">[数据处理中,请稍后...]</span>');
+            setTimeout(function () {
+				// $('#my-modal-loading').modal('close');
+            }, 2000);
+
+        });
+    });
+</script>
+
+{/block}
+<div class="am-hide">
+	<!-- cnzz -->
+</div>
+</body>
+</html>

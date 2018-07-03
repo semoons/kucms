@@ -1,0 +1,90 @@
+{extend name="common/base" }
+
+{block name="style"}
+<style type="text/css">
+.nd-group-select{
+	color: #3bb4f2 !important;
+}
+</style>
+{/block}
+
+{block name="content"}
+<div class="am-g tpl-toolbar">
+	<div class="am-u-sm-12 am-u-md-6">
+		<div class="am-btn-toolbar">
+			<div class="am-btn-group am-btn-group-xs">
+				<a class="am-btn am-btn-default" href="{:url('addConfig')}">
+					<span class="am-icon-plus"></span> 新增
+				</a>
+				<a class="am-btn am-btn-default nd-refresh">
+					<span class="am-icon-refresh"></span> 刷新
+				</a>
+			</div>
+		</div>
+	</div>
+	<div class="am-u-sm-12 am-u-md-6">
+		<div class="am-btn-toolbar">
+			<div class="am-btn-group am-btn-group-xs" style="float: right">
+				<a class="am-btn am-btn-default {eq name='group' value=''}nd-group-select{/eq}" href="{:url('index')}">
+					全部
+				</a>
+				{volist name="group_list" id="vo"}
+				<a class="am-btn am-btn-default {eq name='group' value='$vo.config_group'}nd-group-select{/eq}" href="{:url('index', ['group' => $vo['config_group']])}">
+					{$vo.config_group}
+				</a>
+				{/volist}
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="am-g">
+	<div class="am-u-sm-12">
+
+		<table class="am-table am-table-striped am-table-radius am-table-bordered">
+			<thead>
+				<tr>
+					<th>配置名称</th>
+					<th>配置标题</th>
+					<th>配置类型</th>
+					<th>配置分组</th>
+					<th>配置排序</th>
+					<th>操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				{volist name="list" id="vo"}
+				<tr>
+					<td>{$vo.config_name}</td>
+					<td>{$vo.config_title}</td>
+					<td>{$vo.config_type}</td>
+					<td class="am-form">
+						<input type="text" class="am-input-sm nd-input" value="{$vo.config_group}" url="{:url('modifyConfig', ['id' => $vo['id'], 'field' => 'config_group', 'value' => 'xxxxxx'])}" />
+					</td>
+					<td class="am-form">
+						<input type="text" class="am-input-sm nd-input" value="{$vo.config_sort}" url="{:url('modifyConfig', ['id' => $vo['id'], 'field' =>  'config_sort', 'value' => 'xxxxxx'])}" />
+					</td>
+					<td>
+						<div class="am-btn-toolbar">
+							<div class="am-btn-group am-btn-group-xs">
+								<a class="am-btn am-btn-default am-btn-xs am-text-secondary" href="{:url('editConfig', ['config_id' => $vo['id']])}">
+									<span class="am-icon-pencil-square-o"></span> 编辑
+								</a>
+								<a class="am-btn am-btn-default am-btn-xs am-text-danger ajax-get ajax-confirm" href="{:url('delConfig', ['config_id' => $vo['id']])}">
+									<span class="am-icon-trash-o"></span> 删除
+								</a>
+							</div>
+						</div>
+					</td>
+				</tr>
+				{/volist}
+			</tbody>
+		</table>
+
+		{if condition="!empty($page)"}
+			<div class="am-fl">共 {$total_count} 条记录</div>
+			<div class="am-fr">{$page}</div>
+		{/if}
+	</div>
+</div>
+{/block}

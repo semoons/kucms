@@ -1,0 +1,29 @@
+{extend name="common/base" }
+
+{block name="content"}
+<div class="am-g">
+	<div class="am-u-sm-12">
+		<form class="am-form ajax-form" method="post" action="{:url('addMenu')}">
+		
+			{:block('text', ['title' => '菜单名称', 'name' => 'menu_name', 'value' => ''])}
+		
+			{:block('text', ['title' => '菜单链接', 'name' => 'menu_url', 'value' => ''])}
+			
+			{:block('text', ['title' => '菜单分组', 'name' => 'menu_group', 'value' => ''])}
+			
+			{:block('select', ['title' => '上级菜单', 'name' => 'menu_pid', 'value' => $menu_pid, 'list' => $menu_select])}
+			
+			{:block('text', ['title' => '菜单排序', 'name' => 'menu_sort', 'value' => 0])}
+			
+			{:block('select', ['title' => '打开方式', 'name' => 'menu_target', 'value' => '', 'list' => $menu_target])}
+			
+			{:block('select', ['title' => '是否Build', 'name' => 'menu_build', 'value' => 1, 'list' => $menu_build])}
+			
+			{:block('select', ['title' => '菜单状态', 'name' => 'menu_status', 'value' => 1, 'list' => $menu_status])}
+			
+			{:block('submit', ['title' => '用户操作'])}
+			
+		</form>
+	</div>
+</div>
+{/block}
